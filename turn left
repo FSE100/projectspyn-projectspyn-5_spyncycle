@@ -1,0 +1,2 @@
+ brick.MoveMotorAngleRel('A', 25, -305, 'Brake'); 
+ brick.MoveMotorAngleRel('D', 25, 305, 'Brake');
