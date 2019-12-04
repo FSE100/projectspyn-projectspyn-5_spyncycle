@@ -1,14 +1,17 @@
 global key
 InitKeyboard();
+color = 0;
+distance = 0;
 
 
 
 while 1 == 1
     pause(0.05);
-    brick.StopAllMotors('Coast');
-    distance = brick.UltrasonicDist(1);
-    brick.SetColorMode(2, 2)
-    color = brick.ColorCode(2);
+    brick.StopMotor('A');
+    brick.StopMotor('D');
+    brick.StopMotor('C');
+    pressed = brick.TouchPressed(3);
+    
     
     switch key
         case 'uparrow'
@@ -34,6 +37,7 @@ while 1 == 1
         case 's'
             display("Color: " + color);
             display("Distance: " + distance);
+            display("Touch: " + pressed);
     end
 end
 CloseKeyboard();
