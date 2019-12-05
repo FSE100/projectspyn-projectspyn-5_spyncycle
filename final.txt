@@ -1,0 +1,109 @@
+counter = 0;
+pressed = 0;
+brick.SetColorMode(2,2);
+color = 0;
+color = brick.ColorCode(2);
+while color == 1 || color == 7 
+distanceLeft = brick.UltrasonicDist(1);
+
+disp("Dist: " + distanceLeft);
+disp(pressed);
+ if distanceLeft <= 56
+     counter = 0;
+       while counter < 18 %This moves forward one space.
+            brick.MoveMotorAngleRel('AD', -60, 360, 'Coast');
+            
+            counter = counter +1; 
+            color = brick.ColorCode(2);
+            pressed = brick.TouchPressed(3);
+           if color == 5
+              brick.StopAllMotors;
+              pause(4);
+              counter = 11;
+              color = 1;
+           end
+           if color == 3
+              
+              brick.StopMotor('AD','Brake');
+              brick.MoveMotorAngleRel('A', 500, -620, 'Brake'); %This is the turn left code. 90 degree turns are handled with 310 and -310
+              brick.MoveMotorAngleRel('D', 500, 620, 'Brake');
+              pause(3);
+              brick.ResetMotorAngle('C');
+              brick.MoveMotorAngleAbs('C', 20, 170, 'Brake');
+              brick.WaitForMotor('C');
+              pause(3);
+              brick.ResetMotorAngle('C');
+              brick.MoveMotorAngleAbs('C', 5, -45, 'Brake');
+              brick.WaitForMotor('C');
+              pause(3);
+              brick.MoveMotorAngleRel('A', 500, -620, 'Brake'); %This is the turn left code. 90 degree turns are handled with 310 and -310
+              brick.MoveMotorAngleRel('D', 500, 620, 'Brake');
+              pause(3);
+    while counter < 45 %This moves forward one space.
+            brick.MoveMotorAngleRel('AD', -60, 360, 'Coast');
+            
+            counter = counter +1; 
+            color = brick.ColorCode(2);
+    end
+    brick.StopMotor('AD','Brake');
+    
+           end
+           if pressed == 1
+               brick.StopMotor('AD','Brake');
+           end
+           
+           
+        end
+        
+        brick.StopMotor('AD', 'Brake');
+        pause(2);
+        pressed = brick.TouchPressed(3);
+   if pressed == 1
+        pressed = 0;
+        brick.StopMotor('AD','Brake');
+        brick.MoveMotorAngleRel('A', 80, 340, 'Brake');
+        brick.MoveMotorAngleRel('D', 80, 340, 'Brake');
+        pause(3);
+       brick.MoveMotorAngleRel('A', 500, 310, 'Brake'); %This is the turn right code. 90 degree turns are handled with 310 and -310
+        brick.MoveMotorAngleRel('D', 500, -310, 'Brake');
+        pause(3);
+         while counter < 18 %This moves forward one space.
+            brick.MoveMotorAngleRel('AD', -60,360,'Coast');
+           
+            counter = counter +1;
+            color = brick.ColorCode(2);
+            if color == 5
+              brick.StopAllMotors;
+              pause(4);
+              counter = 11;
+              color = 1;
+           end
+        end
+        brick.StopMotor('AD');
+    end
+ end
+ if distanceLeft > 56 
+        counter = 0;
+        brick.StopMotor('AD','Brake');
+        
+        brick.MoveMotorAngleRel('A', 500, -310, 'Brake'); %This is the turn left code. 90 degree turns are handled with 310 and -310
+        brick.MoveMotorAngleRel('D', 500, 310, 'Brake');
+        pause(3);
+        while counter < 18 %This moves forward one space.
+            brick.MoveMotorAngleRel('AD', -60, 360, 'Coast');
+            
+            counter = counter +1; 
+            color = brick.ColorCode(2);
+            pressed = brick.TouchPressed(3);
+           if color == 5
+              brick.StopAllMotors;
+              pause(4);
+              counter = 11;
+              color = 1;
+           end
+        end
+        brick.StopMotor('AD');
+ end
+ 
+
+end
